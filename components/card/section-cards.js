@@ -7,7 +7,13 @@ const SectionCards = ({ title, videos = [], size }) => {
       <h2 className={styles.title}>{title}</h2>
       <div className={styles.cardWrapper}>
         {videos.map((video, index) => (
-          <Card imgUrl={video.imgUrl} key={index} size={size} id={index} />
+          <Card
+            imgUrl={video.imgUrl}
+            key={index}
+            size={size}
+            id={index}
+            videoId={video.id}
+          />
         ))}
       </div>
     </section>
