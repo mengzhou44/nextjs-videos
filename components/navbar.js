@@ -10,7 +10,7 @@ import { magic } from '../lib/magic-client';
 const NavBar = ({}) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [username, setUsername] = useState('');
-  const [setDidToken] = useState('');
+  const [didToken, setDidToken] = useState('');
   const router = useRouter();
 
   useEffect(() => {
