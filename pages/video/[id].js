@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import styles from '../../styles/video.module.css';
-import { getVideoById } from '../../lib/videos';
+import { Like, DisLike } from '../../components/icons';
 import classnames from 'classnames';
+import { getVideoById } from '../../lib/videos';
 
 Modal.setAppElement('#__next');
 
 export async function getStaticProps(context) {
   const id = context.params.id;
-  const video = await getVideoById(id);
+  let video = await getVideoById(id);
 
   return {
     props: {
@@ -29,6 +31,10 @@ export async function getStaticPaths() {
 
 const Video = ({ video }) => {
   const router = useRouter();
+  const [favorited, setFavorited] = useState(0); //1 : dislike   2: like
+  const [likeSelected, setLikeSelected] = useState(false);
+  const [dislikeSelected, setDislikeSelected] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const {
     title,
@@ -37,6 +43,63 @@ const Video = ({ video }) => {
     channelTitle,
     statistics: { viewCount } = { viewCount: 0 },
   } = video;
+
+  useEffect(() => {
+    const getStats = async (videoId) => {
+      let stats = await fetch(`/api/stats?videoId=${videoId}`);
+      stats = await stats.json();
+
+      setFavorited(stats.favorited);
+      if (stats.favorited === 1) {
+        setDislikeSelected(true);
+      } else if (stats.favorited === 2) {
+        setLikeSelected(true);
+      }
+      setLoading(false);
+    };
+    getStats(video.id);
+  }, []);
+
+  const handleToggleDislike = async () => {
+    setFavorited(1);
+    setLikeSelected(false);
+    setDislikeSelected(true);
+    await rateVideo(1, video.id);
+  };
+
+  const handleToggleLike = async () => {
+    setFavorited(2);
+    setLikeSelected(true);
+    setDislikeSelected(false);
+    await rateVideo(2, video.id);
+  };
+
+  const rateVideo = async (favorited, videoId) => {
+    try {
+      let res = await fetch('/api/stats', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          videoId,
+          favorited,
+          watched: true,
+        }),
+      });
+      res = await res.json();
+    } catch (err) {
+      console.log(`Error while rating the video.`);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <p> Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -54,23 +117,23 @@ const Video = ({ video }) => {
           width="100%"
           height="360"
           src={`http://www.youtube.com/embed/${router.query.id}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
-          frameborder="0"
+          frameBorder="0"
         ></iframe>
 
-        {/* <div className={styles.likeDislikeBtnWrapper}>
+        <div className={styles.likeDislikeBtnWrapper}>
           <div className={styles.likeBtnWrapper}>
             <button onClick={handleToggleLike}>
               <div className={styles.btnWrapper}>
-                <Like selected={toggleLike} />
+                <Like selected={likeSelected} />
               </div>
             </button>
           </div>
           <button onClick={handleToggleDislike}>
             <div className={styles.btnWrapper}>
-              <DisLike selected={toggleDisLike} />
+              <DisLike selected={dislikeSelected} />
             </div>
           </button>
-        </div> */}
+        </div>
         <div className={styles.modalBody}>
           <div className={styles.modalBodyContent}>
             <div className={styles.col1}>

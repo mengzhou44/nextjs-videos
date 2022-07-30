@@ -22,6 +22,12 @@
   bottom: 0;
 }
 
+.test {
+  background-color: white;
+  padding: 10px;
+  color: black;
+}
+
 /** gives box shadow to the video frame **/
 .borderBoxShadow {
   -webkit-box-shadow: 0 3px 7px var(--shadow20);

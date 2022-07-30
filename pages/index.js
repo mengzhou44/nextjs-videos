@@ -5,8 +5,21 @@ import styles from '../styles/Home.module.css';
 import { getPopularVideos, getVideos } from '../lib/videos';
 
 import SectionCards from '../components/card/section-cards';
+import { getWatchedVideos } from '../lib/db/hasura';
+import { useRedirect } from '../lib/useRedirect';
 
 export async function getServerSideProps(context) {
+  const { token, userId } = await useRedirect(context);
+ 
+  let watchAgainVideos = await getWatchedVideos(token, userId);
+  watchAgainVideos =
+    watchAgainVideos?.map((video) => {
+      return {
+        id: video.videoId,
+        imgUrl: `https://i.ytimg.com/vi/${video.videoId}/maxresdefault.jpg`,
+      };
+    }) || [];
+
   const disneyVideos = await getVideos('disney trailer');
   const travelVideos = await getVideos('travel');
   const productivityVideos = await getVideos('productivity');
@@ -19,6 +32,7 @@ export async function getServerSideProps(context) {
       travelVideos,
       popularVideos,
       productivityVideos,
+      watchAgainVideos,
     },
   };
 }
@@ -28,6 +42,7 @@ export default function Home({
   travelVideos,
   popularVideos,
   productivityVideos,
+  watchAgainVideos,
 }) {
   return (
     <div className={styles.container}>
@@ -36,7 +51,7 @@ export default function Home({
         <meta name="description" content="Netflix App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar  />
+      <Navbar />
       <Banner
         videoId="4zH5iYM4wJo"
         title="Clifford the red dog"
@@ -45,6 +60,12 @@ export default function Home({
       />
       <div className={styles.sectionWrapper}>
         <SectionCards title="Disney" videos={disneyVideos} size="large" />
+        <SectionCards
+          title="Watch it again"
+          videos={watchAgainVideos}
+          size="small"
+        />
+
         <SectionCards title="Travel" videos={travelVideos} size="small" />
         <SectionCards
           title="Productivity"

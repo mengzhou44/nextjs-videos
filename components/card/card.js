@@ -28,13 +28,15 @@ const Card = ({ imgUrl = defaultImgUrl, size = 'medium', id = 0, videoId }) => {
       whileHover={scale}
     >
       <Link href={`/video/${videoId}`}>
-        <Image
-          src={imgSrc}
-          alt="image"
-          layout="fill"
-          className={styles.cardImg}
-          onError={handleError}
-        ></Image>
+        <a>
+          <Image
+            src={imgSrc}
+            alt="image"
+            layout="fill"
+            className={styles.cardImg}
+            onError={handleError}
+          ></Image>
+        </a>
       </Link>
     </motion.div>
   );

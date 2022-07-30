@@ -6,6 +6,7 @@ import styles from '../styles/login.module.css';
 import { useState, useEffect } from 'react';
 import validator from 'email-validator';
 import { magic } from '../lib/magic-client';
+import { setLoginInfo } from '../lib/login-info';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,11 +35,23 @@ const Login = () => {
 
     try {
       setIsSigning(true);
- 
+
       const didToken = await magic.auth.loginWithMagicLink({ email });
- 
-      if (didToken) {
+      let res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${didToken}`,
+        },
+      });
+      res = await res.json();
+    
+      if (res.done) {
+        setLoginInfo(email)
         router.push('/');
+      }else {
+           console.log("something went wrong!");
+           setIsSigning(false);
       }
     } catch (err) {
       console.err(err);

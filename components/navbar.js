@@ -6,27 +6,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { magic } from '../lib/magic-client';
+import { loginInfo, setLoginInfo, clearLoginInfo } from '../lib/login-info';
 
 const NavBar = ({}) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [username, setUsername] = useState('');
-  const [didToken, setDidToken] = useState('');
+  const [username, setUsername] = useState('loading...');
   const router = useRouter();
 
   useEffect(() => {
     const applyUsernameInNav = async () => {
       try {
-        const { email, issuer } = await magic.user.getMetadata();
-        const didToken = await magic.user.getIdToken();
+        const { email } = await magic.user.getMetadata();
+
         if (email) {
           setUsername(email);
-          setDidToken(didToken);
+          setLoginInfo(email);
         }
       } catch (error) {
         console.error('Error retrieving email', error);
       }
     };
-    applyUsernameInNav();
+    if (loginInfo === null) {
+      applyUsernameInNav();
+    } else {
+      setUsername(loginInfo.email);
+    }
   }, []);
 
   const handleOnClickHome = (e) => {
@@ -36,7 +40,7 @@ const NavBar = ({}) => {
 
   const handleOnClickMyList = (e) => {
     e.preventDefault();
-    router.push('/browse/my-list');
+    router.push('/my-list');
   };
 
   const handleShowDropdown = (e) => {
@@ -46,10 +50,13 @@ const NavBar = ({}) => {
 
   const handleSignout = async (e) => {
     e.preventDefault();
-
     try {
-      await magic.user.logout();
-      router.push('/login');
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+      });
+
+      await response.json();
+      clearLoginInfo();
     } catch (error) {
       console.error('Error logging out', error);
       router.push('/login');
