@@ -11,7 +11,7 @@ Modal.setAppElement('#__next');
 export async function getStaticProps(context) {
   const id = context.params.id;
   let video = await getVideoById(id);
-
+  console.log({ video });
   return {
     props: {
       video,

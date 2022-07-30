@@ -7,6 +7,10 @@ export async function middleware(req, ev) {
   const userId = await verifyToken(token);
   const { pathname } = req.nextUrl;
 
+  if (req.nextUrl.pathname.startsWith('/_next')) {
+    return NextResponse.next();
+  }
+
   if (
     pathname.startsWith('/_next') ||
     pathname.includes('/api/login') ||
