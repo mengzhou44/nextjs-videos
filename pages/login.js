@@ -49,6 +49,7 @@ const Login = () => {
       res = await res.json();
       console.log({ res });
       if (res.done) {
+        console.log('step3');
         setLoginInfo(email);
         router.push('/');
       } else {
@@ -56,6 +57,7 @@ const Login = () => {
         setIsSigning(false);
       }
     } catch (err) {
+      console.log('step4');
       console.error(err);
       setIsSigning(false);
     }
