@@ -35,10 +35,7 @@ const Login = () => {
 
     try {
       setIsSigning(true);
-      console.log('step1');
       const didToken = await magic.auth.loginWithMagicLink({ email });
-      console.log('step2');
-      console.log({ didToken });
       let res = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -47,9 +44,7 @@ const Login = () => {
         },
       });
       res = await res.json();
-      console.log({ res });
       if (res.done) {
-        console.log('step3');
         setLoginInfo(email);
         router.push('/');
       } else {
@@ -57,7 +52,6 @@ const Login = () => {
         setIsSigning(false);
       }
     } catch (err) {
-      console.log('step4');
       console.error(err);
       setIsSigning(false);
     }
