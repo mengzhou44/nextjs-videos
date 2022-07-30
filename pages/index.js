@@ -6,10 +6,10 @@ import { getPopularVideos, getVideos } from '../lib/videos';
 
 import SectionCards from '../components/card/section-cards';
 import { getWatchedVideos } from '../lib/db/hasura';
-import { useRedirect } from '../lib/useRedirect';
+import { redirectUser } from '../lib/redirect-user';
 
 export async function getServerSideProps(context) {
-  const { token, userId } = await useRedirect(context);
+  const { token, userId } = await redirectUser(context);
  
   let watchAgainVideos = await getWatchedVideos(token, userId);
   watchAgainVideos =
