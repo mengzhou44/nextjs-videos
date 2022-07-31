@@ -11,7 +11,7 @@ Modal.setAppElement('#__next');
 export async function getStaticProps(context) {
   const id = context.params.id;
   let video = await getVideoById(id);
-  console.log({ video });
+
   return {
     props: {
       video,
@@ -36,6 +36,7 @@ const Video = ({ video }) => {
   const [dislikeSelected, setDislikeSelected] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  console.log('funtional component', { video });
   const {
     title,
     publishTime,
