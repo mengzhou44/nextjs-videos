@@ -116,7 +116,7 @@ const Video = ({ video }) => {
           className={styles.videoPlayer}
           width="100%"
           height="360"
-          src={`http://www.youtube.com/embed/${router.query.id}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
+          src={`https://www.youtube.com/embed/${router.query.id}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
           frameBorder="0"
         ></iframe>
 
