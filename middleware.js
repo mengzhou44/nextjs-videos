@@ -2,11 +2,9 @@ import { NextResponse } from 'next/server';
 import { verifyToken } from './lib/verify-token';
 
 export async function middleware(req, ev) {
-
   const token = req ? req.cookies.get('token') : null;
   const userId = await verifyToken(token);
   const { pathname } = req.nextUrl;
-
 
   if (
     pathname.startsWith('/_next') ||

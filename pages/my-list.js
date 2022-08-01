@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Navbar from '../components/navbar';
 import styles from './my-list.module.css';
 import SectionCards from '../components/card/section-cards';
-import { getMyVideos } from '../lib/db/hasura';
+import { getMyVideos } from '../backend/hasura';
 import { redirectUser } from '../lib/redirect-user';
 
 export async function getServerSideProps(context) {

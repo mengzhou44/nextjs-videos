@@ -4,7 +4,7 @@ import {
   getStatsByVideoId,
   updateStats,
   addNewStats,
-} from '../../lib/db/hasura';
+} from '../../backend/hasura';
 export default async (req, res) => {
   try {
     const token = req.cookies.token;
