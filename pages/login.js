@@ -47,6 +47,7 @@ const Login = () => {
       if (res.done) {
         setLoginInfo(email);
         router.push('/');
+        console.log('done router.push'); 
       } else {
         console.log('something went wrong!');
         setIsSigning(false);
