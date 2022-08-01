@@ -21,6 +21,8 @@ const NavBar = ({}) => {
         if (email) {
           setUsername(email);
           setLoginInfo(email);
+        } else {
+          handleSignout();
         }
       } catch (error) {
         console.error('Error retrieving email', error);

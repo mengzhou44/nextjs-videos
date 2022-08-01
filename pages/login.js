@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import styles from '../styles/login.module.css';
+import styles from './login.module.css';
 import { useState, useEffect } from 'react';
 import validator from 'email-validator';
 import { magic } from '../lib/magic-client';

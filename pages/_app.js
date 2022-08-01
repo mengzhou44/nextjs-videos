@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import '../styles/globals.css';
+import './_app.css';
 
 import Loading from '../components/loading';
 

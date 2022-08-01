@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import Navbar from '../components/navbar';
-import styles from '../styles/my-list.module.css';
+import styles from './my-list.module.css';
 import SectionCards from '../components/card/section-cards';
 import { getMyVideos } from '../lib/db/hasura';
 import { redirectUser } from '../lib/redirect-user';
 
 export async function getServerSideProps(context) {
   const { token, userId } = await redirectUser(context);
-
 
   let myVideos = await getMyVideos(token, userId);
  

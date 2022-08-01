@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Banner from '../components/banner';
 import Navbar from '../components/navbar';
-import styles from '../styles/Home.module.css';
+import styles from './index.module.css';
 import { getPopularVideos, getVideos } from '../lib/videos';
 
 import SectionCards from '../components/card/section-cards';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useRouter } from 'next/router';
-import styles from '../../styles/video.module.css';
+import styles from './video.module.css';
 import { Like, DisLike } from '../../components/icons';
 import classnames from 'classnames';
 import { getVideoById } from '../../lib/videos';
