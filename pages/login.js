@@ -36,21 +36,22 @@ const Login = () => {
     try {
       setIsSigning(true);
       const didToken = await magic.auth.loginWithMagicLink({ email });
-      let res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${didToken}`,
-        },
-      });
-      res = await res.json();
-      if (res.done) {
-        setLoginInfo(email);
-        router.push('/');
-        console.log('done router.push'); 
-      } else {
-        console.log('something went wrong!');
-        setIsSigning(false);
+      if (didToken) {
+        let res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${didToken}`,
+          },
+        });
+        res = await res.json();
+        if (res.done) {
+          setLoginInfo(email);
+          router.push('/');
+        } else {
+          console.log('something went wrong!');
+          setIsSigning(false);
+        }
       }
     } catch (err) {
       console.error(err);
