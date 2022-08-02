@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { magic } from '../lib/magic-client';
-import { loginInfo, setLoginInfo, clearLoginInfo } from '../lib/login-info';
+import { magic } from '../utils/magic-client';
+import { loginInfo, setLoginInfo, clearLoginInfo } from '../utils/login-info';
 
 const NavBar = ({}) => {
   const [showDropdown, setShowDropdown] = useState(false);

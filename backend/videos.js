@@ -41,7 +41,6 @@ export const getVideoById = async (id) => {
       };
     });
     const video = results.length > 0 ? results[0] : {};
-    console.log({video});
     return video;
   } catch (err) {
     console.error('Youtube API error', { err });

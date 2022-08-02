@@ -3,7 +3,7 @@ import Navbar from '../components/navbar';
 import styles from './my-list.module.css';
 import SectionCards from '../components/card/section-cards';
 import { getMyVideos } from '../backend/hasura';
-import { redirectUser } from '../lib/redirect-user';
+import { redirectUser } from '../backend/redirect-user';
 
 export async function getServerSideProps(context) {
   const { token, userId } = await redirectUser(context);

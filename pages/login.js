@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import styles from './login.module.css';
 import { useState, useEffect } from 'react';
 import validator from 'email-validator';
-import { magic } from '../lib/magic-client';
-import { setLoginInfo } from '../lib/login-info';
+import { magic } from '../utils/magic-client';
+import { setLoginInfo } from '../utils/login-info';
 
 const Login = () => {
   const [email, setEmail] = useState('');

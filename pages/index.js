@@ -2,11 +2,11 @@ import Head from 'next/head';
 import Banner from '../components/banner';
 import Navbar from '../components/navbar';
 import styles from './index.module.css';
-import { getPopularVideos, getVideos } from '../lib/videos';
+import { getPopularVideos, getVideos } from '../backend/videos';
 
 import SectionCards from '../components/card/section-cards';
 import { getWatchedVideos } from '../backend/hasura';
-import { redirectUser } from '../lib/redirect-user';
+import { redirectUser } from '../backend/redirect-user';
 
 export async function getServerSideProps(context) {
   const { token, userId } = await redirectUser(context);

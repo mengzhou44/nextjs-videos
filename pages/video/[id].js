@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import styles from './video.module.css';
 import { Like, DisLike } from '../../components/icons';
 import classnames from 'classnames';
-import { getVideoById } from '../../lib/videos';
+import { getVideoById } from '../../backend/videos';
 
 Modal.setAppElement('#__next');
 
